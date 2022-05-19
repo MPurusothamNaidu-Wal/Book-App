@@ -1,0 +1,233 @@
+.app {
+  text-align: center;
+  height: 850px;
+  background-color: #ddd;
+}
+
+.cancel {
+  margin-left: 250px;
+}
+.available {
+  color: #baa94a;
+  background-color: #ddd;
+}
+.head {
+  color: #182b47;
+  background-color: #ddd;
+  font-size: 80px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+.cards-list {
+  margin-left: 13px;
+  background-color: #eeedbb;
+  z-index: 0;
+  width: 99%;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+.card {
+  background: #e7b3da;
+  margin: 30px auto;
+  width: 350px;
+  height: 550px;
+  border-radius: 40px;
+  box-shadow: 5px 5px 30px 7px rgba(0, 0, 0, 0.25),
+    -5px -5px 30px 7px rgba(0, 0, 0, 0.22);
+  cursor: pointer;
+  transition: 0.4s;
+}
+.card-body {
+  background-color: #99998e;
+}
+
+.team3-card-img-top {
+  height: 300px;
+}
+.addbook {
+  background-color: #609c77;
+}
+.card:hover {
+  transform: scale(0.9, 0.9);
+  box-shadow: 5px 5px 30px 15px rgba(0, 0, 0, 0.25),
+    -5px -5px 30px 15px rgba(0, 0, 0, 0.22);
+}
+.form-control {
+  box-shadow: none;
+  width: 65%;
+  border-color: #ddd;
+}
+.form-control:focus {
+  border-color: #4aba70;
+}
+.login-form {
+  margin: 0 auto;
+  padding: 30px 0;
+  align-content: center;
+}
+.login-form .avatar {
+  width: 18%;
+}
+.login-form form {
+  background: rgb(214, 199, 170);
+  margin: 30px auto;
+  width: 60%;
+  height: 90%;
+  border-radius: 40px;
+  box-shadow: 5px 5px 30px 7px rgba(0, 0, 0, 0.25),
+    -5px -5px 30px 7px rgba(0, 0, 0, 0.22);
+  cursor: pointer;
+  transition: 0.4s;
+}
+.login-form h4 {
+  text-align: center;
+  font-size: 40px;
+  margin-bottom: 20px;
+}
+
+.login-form .form-control,
+.login-form .btn {
+  border-radius: 15px;
+  margin-bottom: 20px;
+}
+.login-form .form-control {
+  border: none;
+  border-bottom: 0.125rem solid;
+  height: 3rem;
+  margin: auto;
+  margin-bottom: 30px;
+  width: 70%;
+  font-size: 1.0625rem;
+  padding-left: 0.875rem;
+  line-height: 147.6%;
+  padding-top: 0.825rem;
+  padding-bottom: 0.5rem;
+}
+.login-form .btn {
+  height: 50px;
+  border: 2px solid #131313;
+  cursor: pointer;
+  background-color: #609c77;
+  position: relative;
+  transition: color 0.3s ease-in-out;
+  border: none;
+  width: 90%;
+  font-size: 20px;
+}
+.login-form .btn:hover {
+  color: #fff;
+  background-color: rgb(17, 153, 78);
+}
+.login-form a {
+  color: #4aba70;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.header {
+  font-size: 140px;
+  color: #f1cdb4;
+}
+.wrap {
+  margin-top: 100px;
+  height: 60%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.button {
+  margin-left: 20px;
+  min-width: 300px;
+  min-height: 60px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 22px;
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+  font-weight: 700;
+  color: #313133;
+  background: #d1cf4f;
+  background: linear-gradient(
+    90deg,
+    rgb(222, 129, 230) 0%,
+    rgb(207, 209, 79) 100%
+  );
+  border: none;
+  border-radius: 1000px;
+  box-shadow: 12px 12px 24px rgba(79, 209, 197, 0.64);
+  transition: all 0.3s ease-in-out 0s;
+  cursor: pointer;
+  outline: none;
+  position: relative;
+  padding: 10px;
+}
+
+.button::before {
+  content: '';
+  border-radius: 1000px;
+  min-width: calc(300px + 12px);
+  min-height: calc(60px + 12px);
+  border: 6px solid #00ffcb;
+  box-shadow: 0 0 60px rgba(0, 255, 203, 0.64);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.button:hover,
+.button:focus {
+  color: #313133;
+  transform: translateY(-6px);
+}
+
+.button:hover::before,
+.button:focus::before {
+  opacity: 1;
+}
+
+.button::after {
+  content: '';
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  border: 6px solid #00ffcb;
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
