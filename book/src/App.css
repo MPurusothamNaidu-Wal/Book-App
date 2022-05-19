@@ -3,9 +3,17 @@
   height: 850px;
   background-color: #ddd;
 }
-
+.addbook {
+  float: left;
+}
+.logout {
+  float: right;
+}
 .cancel {
-  margin-left: 250px;
+  float: left;
+}
+.delete {
+  float: right;
 }
 .available {
   color: #baa94a;

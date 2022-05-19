@@ -12,4 +12,12 @@ router.get('/uploads/:name', (req, res) => {
   res.sendFile(filePath);
 });
 
+var booksRouter = require('./book');
+var userRouter = require('./user');
+var categoryRouter = require('./categories');
+
+router.use('/books', booksRouter);
+router.use('/categories', categoryRouter);
+router.use('/user', userRouter);
+
 module.exports = router;

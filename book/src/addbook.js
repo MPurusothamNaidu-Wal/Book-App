@@ -169,34 +169,34 @@ const AddBook = () => {
     //Main app
     <div className='addbook'>
       <h1 className='text-center head'>Book App</h1>
+      <button
+        className='btn btn-danger col-2  logout'
+        onClick={() => {
+          navigate('/login');
+          localStorage.removeItem('token');
+          localStorage.removeItem('isLoggedin');
+          setTimeout(() => {
+            alert('Loggedout successfully');
+          }, 500);
+        }}
+      >
+        Logout
+        <svg
+          xmlns='http://www.w3.org/2000/svg'
+          width='16'
+          height='16'
+          fill='currentColor'
+          className='bi bi-door-closed'
+          viewBox='0 0 16 16'
+        >
+          <path d='M3 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v13h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V2zm1 13h8V2H4v13z' />
+          <path d='M9 9a1 1 0 1 0 2 0 1 1 0 0 0-2 0z' />
+        </svg>
+      </button>
       <div className=' col-lg-9 col-md-9 col-sm-9 mx-auto'>
         <div>
-          <button className='button m-1' onClick={toggle}>
+          <button className='button m-1 addbook' onClick={toggle}>
             Add Book
-          </button>
-          <button
-            className='btn btn-danger col-2 '
-            onClick={() => {
-              navigate('/login');
-              localStorage.removeItem('token');
-              localStorage.removeItem('isLoggedin');
-              setTimeout(() => {
-                alert('Loggedout successfully');
-              }, 500);
-            }}
-          >
-            Logout
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              width='16'
-              height='16'
-              fill='currentColor'
-              className='bi bi-door-closed'
-              viewBox='0 0 16 16'
-            >
-              <path d='M3 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v13h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V2zm1 13h8V2H4v13z' />
-              <path d='M9 9a1 1 0 1 0 2 0 1 1 0 0 0-2 0z' />
-            </svg>
           </button>
         </div>
         {/* Modal for adding book */}
@@ -472,14 +472,7 @@ const AddBook = () => {
                       <ModalHeader>
                         <ModalHeader>Want to Delete ?</ModalHeader>
                         <ModalBody>
-                          <Button
-                            className='btn btn-danger'
-                            onClick={() => {
-                              deleteBook(delid);
-                            }}
-                          >
-                            Delete
-                          </Button>
+                          Deleting the data will remove all its content
                           <Button
                             className='cancel'
                             onClick={() => {
@@ -487,6 +480,14 @@ const AddBook = () => {
                             }}
                           >
                             Cancel
+                          </Button>
+                          <Button
+                            className='btn btn-danger delete'
+                            onClick={() => {
+                              deleteBook(delid);
+                            }}
+                          >
+                            Delete
                           </Button>
                         </ModalBody>
                       </ModalHeader>

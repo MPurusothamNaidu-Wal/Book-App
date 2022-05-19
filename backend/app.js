@@ -1,13 +1,13 @@
 var createError = require('http-errors');
 var express = require('express');
+const cron = require('node-cron');
 
 var cors = require('cors');
 var path = require('path');
 
+const Book = require('./models').Books;
+
 var indexRouter = require('./routes/index');
-var booksRouter = require('./routes/book');
-var userRouter = require('./routes/user');
-var categoryRouter = require('./routes/categories');
 
 var app = express();
 
@@ -20,10 +20,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(cors());
+
 app.use('/', indexRouter);
-app.use('/books', booksRouter);
-app.use('/categories', categoryRouter);
-app.use('/user', userRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -39,6 +37,18 @@ app.use(function (err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+cron.schedule('* 19 * * *', async () => {
+  await Book.create({
+    name: 'demo book at 7',
+    author: 'author name added',
+    publication: 'publication added',
+    price: '800',
+    availability: 1,
+    image: '/uploads/1652936192228-gulliver.jpg',
+    categoryId: 1,
+  });
 });
 
 module.exports = app;

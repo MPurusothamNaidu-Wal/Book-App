@@ -84,6 +84,7 @@ router.post(
     }
   }
 );
+
 router.get('/', authentication, async (req, res) => {
   await Book.findAll().then(
     (books) => {
@@ -94,16 +95,16 @@ router.get('/', authentication, async (req, res) => {
     }
   );
 });
+
 router.get('/:id', authentication, async (req, res) => {
-  await Book.findOne({ where: { id: req.params.id } }).then(
-    (books) => {
-      return res.status(200).json(books);
-    },
-    (error) => {
-      return res.status(500).json(error);
-    }
-  );
+  try {
+    const books = await Book.findOne({ where: { id: req.params.id } });
+    res.json(books);
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
 });
+
 router.delete('/del/:id', authentication, async (req, res) => {
   try {
     const book = await Book.findOne({ where: { id: req.params.id } });
