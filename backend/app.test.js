@@ -28,3 +28,8 @@ test('Should get 200 if data logged in correctly', async () => {
     })
     .expect(200);
 });
+
+test('Get all Categories request without token, expects 200', async () => {
+  await request(app).get('/categories').expect(200);
+});
+

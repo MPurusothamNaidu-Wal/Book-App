@@ -3,8 +3,33 @@
   height: 850px;
   background-color: #ddd;
 }
-.addbook {
-  float: left;
+
+@media screen and (max-width: 800px) {
+  .app {
+    background-image: none;
+    background-color: #131313;
+  }
+  .header {
+    color: black;
+  }
+  .pro {
+    width: 150%;
+  }
+}
+#emailvalid {
+  color: red;
+  font-size: medium;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+#authorvalid {
+  color: red;
+  font-size: medium;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+#pubvalid {
+  color: red;
+  font-size: medium;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 .logout {
   float: right;
@@ -164,7 +189,7 @@
 }
 
 .header {
-  font-size: 140px;
+  font-size: 130px;
   color: #f1cdb4;
 }
 .wrap {

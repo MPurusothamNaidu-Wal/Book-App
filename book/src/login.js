@@ -36,7 +36,7 @@ const LoginApp = () => {
       <form onSubmit={formik.handleSubmit}>
         <div className='avatar'>
           <i>
-            <img src={download} />
+            <img className='pro' src={download} />
           </i>
         </div>
         <h4>Login to Your Account</h4>

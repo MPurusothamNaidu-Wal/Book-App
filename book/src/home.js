@@ -4,7 +4,10 @@ import LoginApp from './login';
 const HomeApp = () => {
   var navigate = useNavigate();
   return (
-    <div className='app' style={{ backgroundImage: `url(${library})` }}>
+    <div
+      className='container-fluid app'
+      style={{ backgroundImage: `url(${library})` }}
+    >
       <p className='header'>Library App</p>
       <div className='wrap'>
         <button

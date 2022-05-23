@@ -1,5 +1,4 @@
 const express = require('express');
-const { body, validationResult } = require('express-validator');
 const router = express.Router();
 const Category = require('../models').Categories;
 const authentication = require('../middlewares/AuthenticationMiddleware');
@@ -14,7 +13,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', authentication, async (req, res) => {
   let { name, description } = req.body;
   Category.create({
     name: name,

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
@@ -13,6 +14,7 @@ import {
   Input,
 } from 'reactstrap';
 
+import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 var FormData = require('form-data');
@@ -107,20 +109,40 @@ const AddBook = () => {
     formData.append('availabilty', availability);
     console.log(formData);
     console.log(availability);
-    try {
-      console.log(category_id);
-      axios({
-        method: 'POST',
-        url: 'http://localhost:3000/books/add/',
-        headers: { token },
-        data: formData,
-      }).then(() => {
-        console.log(file);
-        alert('Book added successfully');
-        getBook();
-      });
-    } catch (ex) {
-      console.log(ex);
+
+    if (name.length < 3) {
+      alert('validation error');
+      document.getElementById('emailvalid').textContent =
+        'Email must be more than 3 characters';
+    } else if (author.length < 4) {
+      alert('validation error');
+      document.getElementById('authorvalid').textContent =
+        'Author must be more than 4 characters';
+    } else if (publication.length < 4) {
+      alert('Validation error');
+      document.getElementById('pubvalid').textContent =
+        'Publication must be more than 4 characters';
+    } else {
+      try {
+        console.log(category_id);
+        axios({
+          method: 'POST',
+          url: 'http://localhost:3000/books/add/',
+          data: formData,
+          headers: { token },
+        })
+          .then(() => {
+            console.log(file);
+            getBook();
+            alert('Book added successfully');
+          })
+          .catch((error) => {
+            alert('Validation error');
+          });
+      } catch (ex) {
+        alert('Validation failed');
+        console.log(ex);
+      }
     }
   };
 
@@ -167,7 +189,7 @@ const AddBook = () => {
 
   return (
     //Main app
-    <div className='addbook'>
+    <div className='container-fluid addbook'>
       <h1 className='text-center head'>Book App</h1>
       <button
         className='btn btn-danger col-2  logout'
@@ -195,7 +217,7 @@ const AddBook = () => {
       </button>
       <div className=' col-lg-9 col-md-9 col-sm-9 mx-auto'>
         <div>
-          <button className='button m-1 addbook' onClick={toggle}>
+          <button className='button ' onClick={toggle}>
             Add Book
           </button>
         </div>
@@ -214,6 +236,7 @@ const AddBook = () => {
                     setName(e.target.value);
                   }}
                 />
+                <p id='emailvalid'></p>
               </FormGroup>
 
               <FormGroup>
@@ -226,6 +249,7 @@ const AddBook = () => {
                     setAuthor(e.target.value);
                   }}
                 />
+                <p id='authorvalid'></p>
               </FormGroup>
               <FormGroup>
                 <Input
@@ -237,6 +261,7 @@ const AddBook = () => {
                     setPublication(e.target.value);
                   }}
                 />
+                <p id='pubvalid'></p>
               </FormGroup>
               <FormGroup>
                 <Input
@@ -499,6 +524,63 @@ const AddBook = () => {
           );
         })}
       </div>
+      <center>
+        <div className='page'>
+          <Pagination className='col-lg-4 col-md-3 mt-2 mx-auto col-sm-4'>
+            <PaginationItem className='mx-md-auto'>
+              <PaginationLink onClick={() => setPageNo(1)}>
+                {'<<'}
+              </PaginationLink>
+            </PaginationItem>
+            <PaginationItem className='mx-md-auto'>
+              <PaginationLink
+                onClick={() => {
+                  if (PageNo > 1) {
+                    setPageNo(PageNo - 1);
+                  } else {
+                    setPageNo(1);
+                  }
+                }}
+              >
+                {'<'}
+              </PaginationLink>
+            </PaginationItem>
+            <PaginationItem className='mx-md-auto'>
+              <PaginationLink onClick={() => setPageNo(1)}>1</PaginationLink>
+            </PaginationItem>
+            <PaginationItem className='mx-md-auto'>
+              <PaginationLink onClick={() => setPageNo(2)}>2</PaginationLink>
+            </PaginationItem>
+            <PaginationItem className='mx-md-auto'>
+              <PaginationLink onClick={() => setPageNo(3)}>3</PaginationLink>
+            </PaginationItem>
+            <PaginationItem className='mx-md-auto'>
+              <PaginationLink onClick={() => setPageNo(4)}>4</PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink onClick={() => setPageNo(5)}>5</PaginationLink>
+            </PaginationItem>
+            <PaginationItem className='mx-md-auto'>
+              <PaginationLink
+                onClick={() => {
+                  if (PageNo >= 100) {
+                    setPageNo(100);
+                  } else {
+                    setPageNo(PageNo + 1);
+                  }
+                }}
+              >
+                {'>'}
+              </PaginationLink>
+            </PaginationItem>
+            <PaginationItem className='mx-md-auto'>
+              <PaginationLink onClick={() => setPageNo(100)}>
+                {'>>'}
+              </PaginationLink>
+            </PaginationItem>
+          </Pagination>
+        </div>
+      </center>
     </div>
   );
 };

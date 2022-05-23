@@ -38,24 +38,23 @@ const upload = multer({
 router.post(
   '/add',
   authentication,
-  body('name').trim(),
   upload.single('image'),
   async (req, res) => {
     const errors = validationResult(req);
     console.log(req.body);
-    const {
-      name,
-      author,
-      publication,
-      price,
-      availability,
-      image,
-      categoryId,
-    } = req.body;
 
     if (!errors.isEmpty()) {
-      res.json(errors);
+      res.status(500).json(errors);
     } else {
+      const {
+        name,
+        author,
+        publication,
+        price,
+        availability,
+        image,
+        categoryId,
+      } = req.body;
       try {
         try {
           const category = await Category.findOne({
@@ -101,7 +100,7 @@ router.get('/:id', authentication, async (req, res) => {
     const books = await Book.findOne({ where: { id: req.params.id } });
     res.json(books);
   } catch (err) {
-    res.status(500).json({ error: err });
+    res.json({ error: err });
   }
 });
 
