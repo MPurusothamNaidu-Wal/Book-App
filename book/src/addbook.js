@@ -14,7 +14,7 @@ import {
   Input,
 } from 'reactstrap';
 
-import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
+import ReactPaginate from 'react-paginate';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 var FormData = require('form-data');
@@ -187,6 +187,209 @@ const AddBook = () => {
       });
   };
 
+  const [pageNumber, setPageNumber] = useState(0);
+  const usersPerPage = 4;
+  const pagesVisited = pageNumber * usersPerPage;
+
+  const pageCount = Math.ceil(bookData.length / usersPerPage);
+  const changePage = ({ selected }) => {
+    setPageNumber(selected);
+  };
+  const displayBooks = bookData
+    .slice(pagesVisited, pagesVisited + usersPerPage)
+    .map((val, index) => {
+      return (
+        <div className='col-lg-3 col-sm-6 col-md-6'>
+          <div className='card team3_divimg'>
+            <img className='team3-card-img-top' src={val.image} />
+            <div className='card-body'>
+              <div>
+                <h4>{val.name}</h4> <br />
+                <h6>Author: {val.author}</h6>
+              </div>
+              <h6>Publication: {val.publication} </h6>
+              <h6 className='available'>
+                {val.availability ? 'Available' : 'Not Available'} <br />
+              </h6>
+              <h5 className='aligncenter'>
+                Price : <b>${val.price}</b>
+              </h5>
+              <div className='d-flex flex-row-reverse'>
+                <Button
+                  className='m-2 w-50'
+                  color='primary'
+                  onClick={() => {
+                    editToggle();
+                    getSingleBookedit(val.id);
+                  }}
+                >
+                  {' '}
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    width='16'
+                    height='16'
+                    fill='currentColor'
+                    className='bi bi-pencil-square'
+                    viewBox='0 0 16 16'
+                  >
+                    <path d='M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z' />
+                    <path
+                      fillRule='evenodd'
+                      d='M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z'
+                    />
+                  </svg>{' '}
+                  Edit
+                </Button>
+
+                <Modal isOpen={editModal} toggle={editToggle}>
+                  <ModalHeader>Editing Book Details</ModalHeader>
+                  <ModalBody>
+                    <Form onSubmit={saveEdittedData}>
+                      <FormGroup>
+                        <Input
+                          type='text'
+                          name='name'
+                          value={editname}
+                          className='form-control my-3  mx-auto'
+                          placeholder='Enter title'
+                          onChange={(e) => {
+                            seteditName(e.target.value);
+                          }}
+                        />
+                      </FormGroup>
+
+                      <FormGroup>
+                        <Input
+                          type='text'
+                          name='author'
+                          className='form-control my-3 mx-auto'
+                          placeholder='Enter Author'
+                          value={editauthor}
+                          onChange={(e) => {
+                            seteditAuthor(e.target.value);
+                          }}
+                        />
+                      </FormGroup>
+                      <FormGroup>
+                        <Input
+                          type='text'
+                          name='publication'
+                          className='form-control my-3 mx-auto'
+                          placeholder='publication'
+                          value={editpublication}
+                          onChange={(e) => {
+                            seteditPublication(e.target.value);
+                          }}
+                        />
+                      </FormGroup>
+                      <FormGroup>
+                        <Input
+                          type='number'
+                          name='price'
+                          className='form-control my-3 mx-auto'
+                          placeholder='price'
+                          value={editprice}
+                          onChange={(e) => {
+                            seteditPrice(e.target.value);
+                          }}
+                        />
+                      </FormGroup>
+                      <FormGroup>
+                        <select
+                          name='category_id'
+                          className='form-control'
+                          onChange={(e) => {
+                            seteditCat(e.target.value);
+                          }}
+                        >
+                          <option>Select category</option>
+                          {category_id.map((val) => {
+                            return <option value={val.id}>{val.name}</option>;
+                          })}
+                        </select>
+                      </FormGroup>
+                      <FormGroup>
+                        <select
+                          name='availability'
+                          defaultValue={true}
+                          className='form-control'
+                          onChange={(e) => {
+                            seteditAvailability(e.target.value);
+                          }}
+                        >
+                          <option value='true'>Available</option>
+                          <option value='false'>Not Available</option>
+                        </select>
+                      </FormGroup>
+                      <div className='text-center'>
+                        <Button color='success' onClick={saveEdittedData}>
+                          Save Details
+                        </Button>
+                      </div>
+                    </Form>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button color='danger' onClick={editToggle}>
+                      Go Back
+                    </Button>
+                  </ModalFooter>
+                </Modal>
+
+                <Button
+                  className='btn btn-danger btn-sm m-2'
+                  onClick={() => {
+                    setdelId(val.id);
+                    deltoggle();
+                  }}
+                >
+                  Delete
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    width='16'
+                    height='16'
+                    fill='currentColor'
+                    className='bi bi-trash'
+                    viewBox='0 0 16 16'
+                  >
+                    <path d='M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z' />
+                    <path
+                      fillRule='evenodd'
+                      d='M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z'
+                    />
+                  </svg>
+                </Button>
+                {/* Modal for delete confirmation */}
+                <Modal isOpen={delModal}>
+                  <ModalHeader>
+                    <ModalHeader>Want to Delete ?</ModalHeader>
+                    <ModalBody>
+                      Deleting the data will remove all its content
+                      <Button
+                        className='cancel'
+                        onClick={() => {
+                          deltoggle();
+                        }}
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        className='btn btn-danger delete'
+                        onClick={() => {
+                          deleteBook(delid);
+                        }}
+                      >
+                        Delete
+                      </Button>
+                    </ModalBody>
+                  </ModalHeader>
+                </Modal>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    });
+
   return (
     //Main app
     <div className='container-fluid addbook'>
@@ -328,258 +531,20 @@ const AddBook = () => {
         </Modal>
       </div>
       {/* Main Content */}
-      <div className='cards-list'>
-        {bookData.map((val, index) => {
-          return (
-            <div className='col-lg-3 col-sm-6 col-md-6'>
-              <div className='card team3_divimg'>
-                <img className='team3-card-img-top' src={val.image} />
-                <div className='card-body'>
-                  <div>
-                    <h4>{val.name}</h4> <br />
-                    <h6>Author: {val.author}</h6>
-                  </div>
-                  <h6>Publication: {val.publication} </h6>
-                  <h6 className='available'>
-                    {val.availability ? 'Available' : 'Not Available'} <br />
-                  </h6>
-                  <h5 className='aligncenter'>
-                    Price : <b>${val.price}</b>
-                  </h5>
-                  <div className='d-flex flex-row-reverse'>
-                    <Button
-                      className='m-2 w-50'
-                      color='primary'
-                      onClick={() => {
-                        editToggle();
-                        getSingleBookedit(val.id);
-                      }}
-                    >
-                      {' '}
-                      <svg
-                        xmlns='http://www.w3.org/2000/svg'
-                        width='16'
-                        height='16'
-                        fill='currentColor'
-                        className='bi bi-pencil-square'
-                        viewBox='0 0 16 16'
-                      >
-                        <path d='M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z' />
-                        <path
-                          fillRule='evenodd'
-                          d='M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z'
-                        />
-                      </svg>{' '}
-                      Edit
-                    </Button>
-
-                    <Modal isOpen={editModal} toggle={editToggle}>
-                      <ModalHeader>Editing Book Details</ModalHeader>
-                      <ModalBody>
-                        <Form onSubmit={saveEdittedData}>
-                          <FormGroup>
-                            <Input
-                              type='text'
-                              name='name'
-                              value={editname}
-                              className='form-control my-3  mx-auto'
-                              placeholder='Enter title'
-                              onChange={(e) => {
-                                seteditName(e.target.value);
-                              }}
-                            />
-                          </FormGroup>
-
-                          <FormGroup>
-                            <Input
-                              type='text'
-                              name='author'
-                              className='form-control my-3 mx-auto'
-                              placeholder='Enter Author'
-                              value={editauthor}
-                              onChange={(e) => {
-                                seteditAuthor(e.target.value);
-                              }}
-                            />
-                          </FormGroup>
-                          <FormGroup>
-                            <Input
-                              type='text'
-                              name='publication'
-                              className='form-control my-3 mx-auto'
-                              placeholder='publication'
-                              value={editpublication}
-                              onChange={(e) => {
-                                seteditPublication(e.target.value);
-                              }}
-                            />
-                          </FormGroup>
-                          <FormGroup>
-                            <Input
-                              type='number'
-                              name='price'
-                              className='form-control my-3 mx-auto'
-                              placeholder='price'
-                              value={editprice}
-                              onChange={(e) => {
-                                seteditPrice(e.target.value);
-                              }}
-                            />
-                          </FormGroup>
-                          <FormGroup>
-                            <select
-                              name='category_id'
-                              className='form-control'
-                              onChange={(e) => {
-                                seteditCat(e.target.value);
-                              }}
-                            >
-                              <option>Select category</option>
-                              {category_id.map((val) => {
-                                return (
-                                  <option value={val.id}>{val.name}</option>
-                                );
-                              })}
-                            </select>
-                          </FormGroup>
-                          <FormGroup>
-                            <select
-                              name='availability'
-                              defaultValue={true}
-                              className='form-control'
-                              onChange={(e) => {
-                                seteditAvailability(e.target.value);
-                              }}
-                            >
-                              <option value='true'>Available</option>
-                              <option value='false'>Not Available</option>
-                            </select>
-                          </FormGroup>
-                          <div className='text-center'>
-                            <Button color='success' onClick={saveEdittedData}>
-                              Save Details
-                            </Button>
-                          </div>
-                        </Form>
-                      </ModalBody>
-                      <ModalFooter>
-                        <Button color='danger' onClick={editToggle}>
-                          Go Back
-                        </Button>
-                      </ModalFooter>
-                    </Modal>
-
-                    <Button
-                      className='btn btn-danger btn-sm m-2'
-                      onClick={() => {
-                        setdelId(val.id);
-                        deltoggle();
-                      }}
-                    >
-                      Delete
-                      <svg
-                        xmlns='http://www.w3.org/2000/svg'
-                        width='16'
-                        height='16'
-                        fill='currentColor'
-                        className='bi bi-trash'
-                        viewBox='0 0 16 16'
-                      >
-                        <path d='M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z' />
-                        <path
-                          fillRule='evenodd'
-                          d='M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z'
-                        />
-                      </svg>
-                    </Button>
-                    {/* Modal for delete confirmation */}
-                    <Modal isOpen={delModal}>
-                      <ModalHeader>
-                        <ModalHeader>Want to Delete ?</ModalHeader>
-                        <ModalBody>
-                          Deleting the data will remove all its content
-                          <Button
-                            className='cancel'
-                            onClick={() => {
-                              deltoggle();
-                            }}
-                          >
-                            Cancel
-                          </Button>
-                          <Button
-                            className='btn btn-danger delete'
-                            onClick={() => {
-                              deleteBook(delid);
-                            }}
-                          >
-                            Delete
-                          </Button>
-                        </ModalBody>
-                      </ModalHeader>
-                    </Modal>
-                  </div>
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      <div className='cards-list'>{displayBooks}</div>
+      <br />
       <center>
-        <div className='page'>
-          <Pagination className='col-lg-4 col-md-3 mt-2 mx-auto col-sm-4'>
-            <PaginationItem className='mx-md-auto'>
-              <PaginationLink onClick={() => setPageNo(1)}>
-                {'<<'}
-              </PaginationLink>
-            </PaginationItem>
-            <PaginationItem className='mx-md-auto'>
-              <PaginationLink
-                onClick={() => {
-                  if (PageNo > 1) {
-                    setPageNo(PageNo - 1);
-                  } else {
-                    setPageNo(1);
-                  }
-                }}
-              >
-                {'<'}
-              </PaginationLink>
-            </PaginationItem>
-            <PaginationItem className='mx-md-auto'>
-              <PaginationLink onClick={() => setPageNo(1)}>1</PaginationLink>
-            </PaginationItem>
-            <PaginationItem className='mx-md-auto'>
-              <PaginationLink onClick={() => setPageNo(2)}>2</PaginationLink>
-            </PaginationItem>
-            <PaginationItem className='mx-md-auto'>
-              <PaginationLink onClick={() => setPageNo(3)}>3</PaginationLink>
-            </PaginationItem>
-            <PaginationItem className='mx-md-auto'>
-              <PaginationLink onClick={() => setPageNo(4)}>4</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink onClick={() => setPageNo(5)}>5</PaginationLink>
-            </PaginationItem>
-            <PaginationItem className='mx-md-auto'>
-              <PaginationLink
-                onClick={() => {
-                  if (PageNo >= 100) {
-                    setPageNo(100);
-                  } else {
-                    setPageNo(PageNo + 1);
-                  }
-                }}
-              >
-                {'>'}
-              </PaginationLink>
-            </PaginationItem>
-            <PaginationItem className='mx-md-auto'>
-              <PaginationLink onClick={() => setPageNo(100)}>
-                {'>>'}
-              </PaginationLink>
-            </PaginationItem>
-          </Pagination>
-        </div>
+        <ReactPaginate
+          previousLabel={'Previous'}
+          nextLabel={'Next'}
+          pageCount={pageCount}
+          onPageChange={changePage}
+          containerClassName={'paginationBttns'}
+          previousLinkClassName={'previousBttn'}
+          nextLinkClassName={'nexrBttn'}
+          disabledClassName={'paginationDisabled'}
+          activeClassName={'paginationactive'}
+        />
       </center>
     </div>
   );
