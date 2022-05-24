@@ -1,7 +1,8 @@
 .app {
   text-align: center;
-  height: 850px;
-  background-color: #ddd;
+}
+body {
+  background-image: url('./library.webp');
 }
 
 @media screen and (max-width: 800px) {
@@ -16,6 +17,35 @@
     width: 150%;
   }
 }
+
+.paginationBttns {
+  width: 50%;
+  height: 40px;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+}
+
+.paginationBttns a {
+  padding: 10px;
+  margin: 10px;
+  border: 3px solid rgb(3, 7, 75);
+  border-radius: 5px;
+  color: rgb(102, 82, 218);
+  background-color: #ddd;
+  cursor: pointer;
+}
+
+.paginationBttns a:hover {
+  color: white;
+  background-color: rgb(79, 182, 75);
+}
+
+.paginationactive a {
+  color: white;
+  background-color: rgb(104, 204, 117);
+}
+
 #emailvalid {
   color: red;
   font-size: medium;
@@ -99,6 +129,7 @@
 }
 .login-form {
   margin: 0 auto;
+  height: 100%;
   padding: 30px 0;
   align-content: center;
 }
@@ -189,8 +220,8 @@
 }
 
 .header {
-  font-size: 130px;
   color: #f1cdb4;
+  font-size: 120px;
 }
 .wrap {
   margin-top: 100px;

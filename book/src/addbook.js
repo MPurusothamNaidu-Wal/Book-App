@@ -395,7 +395,7 @@ const AddBook = () => {
     <div className='container-fluid addbook'>
       <h1 className='text-center head'>Book App</h1>
       <button
-        className='btn btn-danger col-2  logout'
+        className='btn btn-danger col-lg-2 col-sm-4 col-md-2  logout'
         onClick={() => {
           navigate('/login');
           localStorage.removeItem('token');

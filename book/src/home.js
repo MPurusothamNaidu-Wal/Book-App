@@ -4,33 +4,34 @@ import LoginApp from './login';
 const HomeApp = () => {
   var navigate = useNavigate();
   return (
-    <div
-      className='container-fluid app'
-      style={{ backgroundImage: `url(${library})` }}
-    >
-      <p className='header'>Library App</p>
-      <div className='wrap'>
-        <button
-          className='button'
-          onClick={() => {
-            navigate('/login');
-          }}
-        >
-          Login
-        </button>
-        <button
-          className='button'
-          onClick={() => {
-            if (localStorage.getItem('isLoggedin') === '1') {
-              navigate('/book');
-            } else {
-              alert('Please Log in');
+    <div className='container-fluid '>
+      <div className='row'>
+        <p className='header'>Library App</p>
+      </div>
+      <div className='row'>
+        <div className='col'>
+          <button
+            className='button'
+            onClick={() => {
               navigate('/login');
-            }
-          }}
-        >
-          Books
-        </button>
+            }}
+          >
+            Login
+          </button>
+          <button
+            className='button'
+            onClick={() => {
+              if (localStorage.getItem('isLoggedin') === '1') {
+                navigate('/book');
+              } else {
+                alert('Please Log in');
+                navigate('/login');
+              }
+            }}
+          >
+            Books
+          </button>
+        </div>
       </div>
     </div>
   );
